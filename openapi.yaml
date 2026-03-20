@@ -1,0 +1,132 @@
+openapi: 3.0.0
+
+info:
+  title: Book Management API
+  description: API dùng để quản lý sách (CRUD)
+  version: "1.0.0"
+
+servers:
+  - url: http://localhost:5000
+    description: Local server
+  - url: https://your-app.onrender.com
+    description: Production server
+
+tags:
+  - name: Books
+    description: Book operations
+
+paths:
+  /api/books:
+    get:
+      tags:
+        - Books
+      summary: Get all books
+      responses:
+        "200":
+          description: List of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Book"
+
+    post:
+      tags:
+        - Books
+      summary: Create a new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Book"
+      responses:
+        "201":
+          description: Book created
+
+  /api/books/{id}:
+    get:
+      tags:
+        - Books
+      summary: Get book by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Book found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Book"
+        "404":
+          description: Book not found
+
+    put:
+      tags:
+        - Books
+      summary: Update a book
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookUpdate"
+      responses:
+        "200":
+          description: Book updated
+        "404":
+          description: Book not found
+
+    delete:
+      tags:
+        - Books
+      summary: Delete a book
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Book deleted
+
+components:
+  schemas:
+    Book:
+      type: object
+      required:
+        - id
+        - title
+        - author
+        - price
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        author:
+          type: string
+        price:
+          type: number
+
+    BookUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+        price:
+          type: number
