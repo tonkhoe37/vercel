@@ -8,7 +8,7 @@ info:
 servers:
   - url: http://localhost:5000
     description: Local server
-  - url: https://your-app.onrender.com
+  - url: https://vercel-0d3t.onrender.com
     description: Production server
 
 tags:
