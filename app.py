@@ -33,6 +33,11 @@ books = [
 # ===== APIs =====
 
 
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "API is running"}
+
+
 # GET ALL
 @app.get("/api/books", response_model=List[Book])
 def get_books():
